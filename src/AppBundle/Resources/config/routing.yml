@@ -1,0 +1,3 @@
+user:
+    prefix:   /users
+    resource: "@AppBundle/Resources/config/route/user.yml"
