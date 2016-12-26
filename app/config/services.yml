@@ -1,3 +1,4 @@
 imports:
     - { resource: services/client.yml }
     - { resource: services/client/gitlab.yml }
+    - { resource: services/repository.yml }
