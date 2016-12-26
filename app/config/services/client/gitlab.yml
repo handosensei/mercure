@@ -1,0 +1,9 @@
+parameters:
+    app.gitlab.service.class: ClientBundle\Service\GitlabService
+
+services:
+    app.gitlab.service:
+        class: %app.gitlab.service.class%
+        arguments:
+            - '@gitlab.client'
+            - %gitlab_token%

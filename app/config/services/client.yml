@@ -1,0 +1,9 @@
+parameters:
+    gitlab.client.class: ClientBundle\Client\GitlabClient
+
+services:
+    gitlab.client:
+        class: %gitlab.client.class%
+        arguments:
+            - %gitlab_base_uri%
+            - %gitlab_timeout%
