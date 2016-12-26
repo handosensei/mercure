@@ -1,4 +1,6 @@
 imports:
+    - { resource: services/mapping.yml }
     - { resource: services/client.yml }
     - { resource: services/client/gitlab.yml }
     - { resource: services/repository.yml }
+    - { resource: services/business.yml }

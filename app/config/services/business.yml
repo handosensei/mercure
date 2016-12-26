@@ -1,0 +1,9 @@
+parameters:
+    app.developer.service.class: AppBundle\Service\DeveloperService
+
+services:
+    app.developer.service:
+        class: %app.developer.service.class%
+        arguments:
+            - '@app.gitlab.service'
+            - '@app.developer.mapping'

@@ -1,0 +1,6 @@
+parameters:
+    app.developer.mapping.class: AppBundle\Service\Mapping\DeveloperMapping
+
+services:
+    app.developer.mapping:
+        class: %app.developer.mapping.class%
