@@ -13,8 +13,7 @@ abstract class BaseRepository extends EntityRepository
     public function save($data)
     {
         if (is_array($data)) {
-            $this->saveMultiple($data);
-            return true;
+            return $this->saveMultiple($data);
         }
 
         if (is_object($data)) {
@@ -45,5 +44,7 @@ abstract class BaseRepository extends EntityRepository
             }
         }
         $this->_em->flush();
+
+        return true;
     }
 }

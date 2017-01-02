@@ -46,8 +46,6 @@ class DeveloperService
         }
 
         return $this->developerMapping->format((array) $result[0]);
-
-//        return $this->developerMapping->format((array) $result[0]);
     }
 
 
