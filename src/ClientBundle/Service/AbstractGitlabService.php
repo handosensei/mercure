@@ -3,13 +3,12 @@
 namespace ClientBundle\Service;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Request;
 
 /**
  * Class GitlabService
  * @package ClientBundle\Service
  */
-class GitlabService implements ClientServiceInterface
+abstract class AbstractGitlabService implements ClientServiceInterface
 {
     /**
      * @var ClientInterface
@@ -33,9 +32,10 @@ class GitlabService implements ClientServiceInterface
 
     /**
      * @param string $uri
+     * @param array $parameters
      * @return string
      */
-    private function formatUri($uri, $parameters = array())
+    protected function formatUri($uri, $parameters = array())
     {
         $data = ['private_token' => $this->token];
 
@@ -44,15 +44,5 @@ class GitlabService implements ClientServiceInterface
         }
 
         return sprintf('%s?%s', $uri, http_build_query($data));
-    }
-
-    /**
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function getUsers($filters = array())
-    {
-        $request = new Request('GET', $this->formatUri('users', $filters));
-
-        return $this->client->send($request);
     }
 }
