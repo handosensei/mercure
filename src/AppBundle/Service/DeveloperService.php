@@ -3,9 +3,8 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Developer;
-use AppBundle\Service\Mapping\DeveloperMapping;
+use AppBundle\Service\Mapping\MappingInterface;
 use ClientBundle\Service\ClientServiceInterface;
-use Symfony\Component\VarDumper\Dumper\CliDumper;
 
 /**
  * UserService utilise le client GitlabClient
@@ -18,17 +17,18 @@ class DeveloperService
     protected $clientService;
 
     /**
-     * @var DeveloperMapping
+     * @var MappingInterface
      */
     protected $developerMapping;
 
     /**
      * @param ClientServiceInterface $clientService
+     * @param MappingInterface $mapping
      */
-    public function __construct(ClientServiceInterface $clientService, DeveloperMapping $developerMapping)
+    public function __construct(ClientServiceInterface $clientService, MappingInterface $mapping)
     {
         $this->clientService = $clientService;
-        $this->developerMapping = $developerMapping;
+        $this->developerMapping = $mapping;
     }
 
     /**
