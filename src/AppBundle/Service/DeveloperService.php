@@ -39,13 +39,7 @@ class DeveloperService
     {
         $response = $this->clientService->getUsers(['username' => $username]);
 
-        $result = \GuzzleHttp\json_decode($response->getBody()->getContents());
-
-        if (0 === count($result)) {
-            return null;
-        }
-
-        return $this->developerMapping->format((array) $result[0]);
+        return $this->handleResponse($response);
     }
 
 
