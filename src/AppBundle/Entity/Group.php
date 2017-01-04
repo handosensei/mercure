@@ -5,8 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Table(name="m_group")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
  */
 class Group
 {

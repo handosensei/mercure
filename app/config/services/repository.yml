@@ -1,8 +1,14 @@
 parameters:
     app.developer.repository.class: AppBundle\Repository\DeveloperRepository
+    app.group.repository.class: AppBundle\Repository\GroupRepository
 
 services:
     app.developer.repository:
         class: %app.developer.repository.class%
         factory: ["@doctrine.orm.default_entity_manager", getRepository]
         arguments: ['AppBundle:Developer']
+
+    app.group.repository:
+        class: %app.group.repository.class%
+        factory: ["@doctrine.orm.default_entity_manager", getRepository]
+        arguments: ['AppBundle:Group']
