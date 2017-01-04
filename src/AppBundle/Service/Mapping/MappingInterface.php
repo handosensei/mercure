@@ -6,7 +6,7 @@ interface MappingInterface
 {
     /**
      * @param array $data
-     * @return object
+     * @return
      */
     public function format(array $data);
 }

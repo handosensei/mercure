@@ -4,7 +4,7 @@ parameters:
 
 services:
     app.gitlab.group.service:
-        class: %app.gitlab.user.service.class%
+        class: %app.gitlab.group.service.class%
         arguments:
             - '@gitlab.client'
             - %gitlab_token%

@@ -1,6 +1,10 @@
 parameters:
     app.developer.mapping.class: AppBundle\Service\Mapping\DeveloperMapping
+    app.group.mapping.class: AppBundle\Service\Mapping\GroupMapping
 
 services:
     app.developer.mapping:
         class: %app.developer.mapping.class%
+
+    app.group.mapping:
+        class: %app.group.mapping.class%

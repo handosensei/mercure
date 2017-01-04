@@ -16,14 +16,13 @@ class ImportGroupCommand extends ContainerAwareCommand
         $this
             ->setName('app:group:import')
             ->setDescription('Import d\'un group')
-            ->addArgument('groupname', InputArgument::REQUIRED, 'Nom du groupe Gitlab')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $group = $container->get('app.group.service')->getOwned($input->getArgument('groupname'));
+        $group = $container->get('app.group.service')->getOwned();
 
         $container->get('app.group.repository')->save($group);
     }

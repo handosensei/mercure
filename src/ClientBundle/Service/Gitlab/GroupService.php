@@ -2,7 +2,7 @@
 
 namespace ClientBundle\Service\Gitlab;
 
-use ClientBundle\Service\GitlabService;
+use ClientBundle\Service\AbstractGitlabService;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 
@@ -10,7 +10,7 @@ use GuzzleHttp\Psr7\Request;
  * Class GitlabService
  * @package ClientBundle\Service
  */
-class GroupService extends GitlabService
+class GroupService extends AbstractGitlabService
 {
     /**
      * GitlabService constructor.
