@@ -35,4 +35,16 @@ class UserService extends AbstractGitlabService
 
         return $this->client->send($request);
     }
+
+    /**
+     * @param integer $groupApiId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getMembersFromGroup($groupApiId)
+    {
+        $uri = sprintf('groups/%s/members', $groupApiId);
+        $request = new Request('GET', $this->formatUri($uri));
+
+        return $this->client->send($request);
+    }
 }
