@@ -1,6 +1,7 @@
 parameters:
     app.developer.service.class: AppBundle\Service\DeveloperService
     app.group.service.class: AppBundle\Service\GroupService
+    app.project.service.class: AppBundle\Service\ProjectService
 
 services:
     app.developer.service:
@@ -14,3 +15,9 @@ services:
         arguments:
             - '@app.gitlab.group.service'
             - '@app.group.mapping'
+
+    app.project.service:
+        class: %app.project.service.class%
+        arguments:
+            - '@app.gitlab.project.service'
+            - '@app.project.mapping'

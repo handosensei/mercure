@@ -1,10 +1,17 @@
 parameters:
-    app.gitlab.group.service.class: ClientBundle\Service\Gitlab\GroupService
-    app.gitlab.user.service.class:  ClientBundle\Service\Gitlab\UserService
+    app.gitlab.group.service.class:     ClientBundle\Service\Gitlab\GroupService
+    app.gitlab.project.service.class:   ClientBundle\Service\Gitlab\ProjectService
+    app.gitlab.user.service.class:      ClientBundle\Service\Gitlab\UserService
 
 services:
     app.gitlab.group.service:
         class: %app.gitlab.group.service.class%
+        arguments:
+            - '@gitlab.client'
+            - %gitlab_token%
+
+    app.gitlab.project.service:
+        class: %app.gitlab.project.service.class%
         arguments:
             - '@gitlab.client'
             - %gitlab_token%
@@ -14,4 +21,3 @@ services:
         arguments:
             - '@gitlab.client'
             - %gitlab_token%
-

@@ -1,6 +1,7 @@
 parameters:
-    app.developer.mapping.class: AppBundle\Service\Mapping\DeveloperMapping
-    app.group.mapping.class: AppBundle\Service\Mapping\GroupMapping
+    app.developer.mapping.class:  AppBundle\Service\Mapping\DeveloperMapping
+    app.group.mapping.class:      AppBundle\Service\Mapping\GroupMapping
+    app.project.mapping.class:    AppBundle\Service\Mapping\ProjectMapping
 
 services:
     app.developer.mapping:
@@ -8,3 +9,6 @@ services:
 
     app.group.mapping:
         class: %app.group.mapping.class%
+
+    app.project.mapping:
+        class: %app.project.mapping.class%
