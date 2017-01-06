@@ -18,3 +18,13 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     locale:            fr
+
+    gitlab_timeout: 2
+
+    # GITLAB.COM
+    gitlab_base_uri: https://gitlab.com/api/v3/
+    gitlab_token: GWUsb-STxyeeyAdyD5jL
+
+    # CARMA GITLAB
+    gitlab_base_uri: https://gitlab.carma.grdf.fr/api/v3/
+    gitlab_token: XoxAQMacdXKwdLxzLVDz
