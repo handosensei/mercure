@@ -7,6 +7,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
+/**
+ * TODO : lui ajouter des projets et des groupes
+ * Class ImportDeveloperCommand
+ * @package AppBundle\Command
+ */
 class ImportDeveloperCommand extends ContainerAwareCommand
 {
     protected function configure()
