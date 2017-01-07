@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +27,22 @@ class Group
      * @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Developer", mappedBy="group")
+     */
+    protected $developers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="group")
+     */
+    protected $projects;
+
+    public function __construct()
+    {
+        $this->developers = new ArrayCollection();
+        $this->projects = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -69,6 +86,44 @@ class Group
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDevelopers()
+    {
+        return $this->developers;
+    }
+
+    /**
+     * @param ArrayCollection $developers
+     * @return Group
+     */
+    public function setDevelopers(ArrayCollection $developers)
+    {
+        $this->developers = $developers;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param ArrayCollection $projects
+     * @return Group
+     */
+    public function setProjects(ArrayCollection $projects)
+    {
+        $this->projects = $projects;
 
         return $this;
     }

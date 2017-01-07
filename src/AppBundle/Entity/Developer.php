@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +42,23 @@ class Developer
      * @ORM\Column()
      */
     protected $gravatarUrl;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="developers")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    protected $group;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Project", inversedBy="developers")
+     * @ORM\JoinTable(name="developers_projects")
+     */
+    protected $projects;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -141,6 +159,44 @@ class Developer
     public function setGravatarUrl($gravatarUrl)
     {
         $this->gravatarUrl = $gravatarUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return Group
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param Group $group
+     * @return Developer
+     */
+    public function setGroup(Group $group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param ArrayCollection $projects
+     * @return Developer
+     */
+    public function setProjects(ArrayCollection $projects)
+    {
+        $this->projects = $projects;
 
         return $this;
     }

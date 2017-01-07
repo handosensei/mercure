@@ -36,8 +36,15 @@ class Project
 
     /**
      * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Developer", mappedBy="projects")
      */
     protected $developers;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="projects")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    protected $group;
     
     public function __construct()
     {
@@ -135,6 +142,7 @@ class Project
     public function addDeveloper(Developer $developer)
     {
         $this->developers->add($developer);
+        $developer->addProject($this);
 
         return $this;
     }
