@@ -2,8 +2,6 @@
 
 namespace ClientBundle\Service\Gitlab;
 
-use AppBundle\Entity\Group;
-use ClientBundle\Service\AbstractGitlabService;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 

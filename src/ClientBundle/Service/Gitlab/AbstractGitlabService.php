@@ -1,7 +1,8 @@
 <?php
 
-namespace ClientBundle\Service;
+namespace ClientBundle\Service\Gitlab;
 
+use ClientBundle\Service\ClientServiceInterface;
 use GuzzleHttp\ClientInterface;
 
 /**
