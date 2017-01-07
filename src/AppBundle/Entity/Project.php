@@ -30,26 +30,15 @@ class Project
     protected $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
 
     /**
-     * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Developer", mappedBy="projects")
-     */
-    protected $developers;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="projects")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Group", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $group;
-    
-    public function __construct()
-    {
-        $this->developers = new ArrayCollection();
-    }
 
     /**
      * @return integer
@@ -117,32 +106,20 @@ class Project
     }
 
     /**
-     * @return ArrayCollection
+     * @return Group
      */
-    public function getDevelopers()
+    public function getGroup()
     {
-        return $this->developers;
+        return $this->group;
     }
 
     /**
-     * @param ArrayCollection $developers
+     * @param Group $group
      * @return Project
      */
-    public function setDevelopers($developers)
+    public function setGroup(Group $group)
     {
-        $this->developers = $developers;
-        
-        return $this;
-    }
-
-    /**
-     * @param Developer $developer
-     * @return Project
-     */
-    public function addDeveloper(Developer $developer)
-    {
-        $this->developers->add($developer);
-        $developer->addProject($this);
+        $this->group = $group;
 
         return $this;
     }

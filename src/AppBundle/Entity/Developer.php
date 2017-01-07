@@ -44,14 +44,13 @@ class Developer
     protected $gravatarUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="developers")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="developers", cascade={"persist"})
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $group;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Project", inversedBy="developers")
-     * @ORM\JoinTable(name="developers_projects")
+     * @ORM\ManyToMany(targetEntity="Project", inversedBy="developers", cascade={"persist"})
      */
     protected $projects;
 
@@ -197,6 +196,17 @@ class Developer
     public function setProjects(ArrayCollection $projects)
     {
         $this->projects = $projects;
+
+        return $this;
+    }
+
+    /**
+     * @param Project $project
+     * @return Developer
+     */
+    public function addProject(Project $project)
+    {
+        $this->projects->add($project);
 
         return $this;
     }
