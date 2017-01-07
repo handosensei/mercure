@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Developer;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\Project;
 use AppBundle\Service\Mapping\MappingInterface;
 use ClientBundle\Service\ClientServiceInterface;
 
@@ -49,6 +50,13 @@ class DeveloperService extends AbstractConsumerWebService
     public function getDevelopersByGroup(Group $group)
     {
         $response = $this->clientService->getMembersFromGroup($group->getApiId());
+
+        return $this->handleResponse($response);
+    }
+
+    public function getDevelopersByProject(Project $project)
+    {
+        $response = $this->clientService->getDevelopersByProject($project->getApiId());
 
         return $this->handleResponse($response);
     }

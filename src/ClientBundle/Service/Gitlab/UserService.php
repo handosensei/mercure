@@ -47,4 +47,16 @@ class UserService extends AbstractGitlabService
 
         return $this->client->send($request);
     }
+
+    /**
+     * @param integer $projectApiId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getDevelopersByProject($projectApiId)
+    {
+        $uri = sprintf('projects/%s/members', $projectApiId);
+        $request = new Request('GET', $this->formatUri($uri));
+
+        return $this->client->send($request);
+    }
 }
