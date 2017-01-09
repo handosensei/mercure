@@ -27,7 +27,7 @@ class GroupService extends AbstractGitlabService
      */
     public function getOwned()
     {
-        $request = new Request('GET', $this->formatUri('groups/owned'));
+        $request = new Request('GET', $this->formatUri('groups'));
 
         return $this->client->send($request);
     }

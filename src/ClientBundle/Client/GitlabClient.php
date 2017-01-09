@@ -15,6 +15,7 @@ class GitlabClient extends Client
         parent::__construct([
             'base_uri' => $baseUri,
             'timeout' => $timeout,
+            'verify' => false,
         ]);
     }
 }

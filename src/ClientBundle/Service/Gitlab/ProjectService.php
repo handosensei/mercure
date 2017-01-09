@@ -32,12 +32,13 @@ class ProjectService extends AbstractGitlabService
     /**
      * Récupère les projects d'un groupe
      * @param integer $groupApiId
+     * @param integer $perPage
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getProjectsByGroup($groupApiId)
+    public function getProjectsByGroup($groupApiId, $perPage = 100)
     {
         $url = sprintf('groups/%s/projects', $groupApiId);
-        $request = new Request('GET', $this->formatUri($url));
+        $request = new Request('GET', $this->formatUri($url, ['per_page' => $perPage]));
 
         return $this->client->send($request);
     }

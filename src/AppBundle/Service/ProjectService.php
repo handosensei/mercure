@@ -30,9 +30,9 @@ class ProjectService extends AbstractConsumerWebService
      * @param Group $group
      * @return array|null
      */
-    public function getProjectsByGroup(Group $group)
+    public function getProjectsByGroup(Group $group, $perPage = 100)
     {
-        $response = $this->clientService->getProjectsByGroup($group->getApiId());
+        $response = $this->clientService->getProjectsByGroup($group->getApiId(), $perPage);
 
         return $this->handleResponse($response);
     }
