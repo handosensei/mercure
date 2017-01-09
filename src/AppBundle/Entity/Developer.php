@@ -54,6 +54,13 @@ class Developer
      */
     protected $projects;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="MergeRequest", mappedBy="developer")
+     */
+    protected $mergeRequests;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();

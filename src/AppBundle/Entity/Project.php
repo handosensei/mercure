@@ -41,6 +41,13 @@ class Project
     protected $group;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="MergeRequest", mappedBy="project")
+     */
+    protected $mergeRequests;
+
+    /**
      * @return integer
      */
     public function getId()
