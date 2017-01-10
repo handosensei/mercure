@@ -36,15 +36,17 @@ abstract class BaseRepository extends EntityRepository
             return null;
         }
         $index = 0;
+        $result = [];
         foreach ($data as $object) {
             $this->_em->persist($object);
             $index++;
             if (0 === $index % 1000) {
                 $this->_em->flush();
             }
+            $result[] = $object;
         }
         $this->_em->flush();
 
-        return true;
+        return $result;
     }
 }
