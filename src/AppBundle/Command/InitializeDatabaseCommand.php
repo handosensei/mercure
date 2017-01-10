@@ -37,9 +37,16 @@ class InitializeDatabaseCommand extends ContainerAwareCommand
         }
         $io->comment(sprintf('%s groupe(s) identifié', count($groups)));
         /** @var Group $group */
+        if ($groups instanceof Group) {
+            $groups = [$groups];
+        }
+
+        $developersSaved = [];
+
         foreach ($groups as $group) {
 
             $projects = $container->get('app.project.service')->getProjectsByGroup($group);
+
             if (null === $projects) {
                 $io->error('Pas de projet trouvé appartenant au groupe %s', $group->getName());
                 continue;
@@ -67,12 +74,16 @@ class InitializeDatabaseCommand extends ContainerAwareCommand
                 $io->comment(sprintf('%s développeur(s) identifiés', count($developers)));
                 /** @var Developer $developer */
                 foreach ($developers as $developer) {
-
                     $io->comment(sprintf('GROUP %s, PROJET %s, DEV %s', $group->getName(), $project->getName(), $developer->getName()));
+                    if (!array_key_exists($developer->getApiId(),$developersSaved)) {
+                        $developersSaved[$developer->getApiId()] = $developer;
+                    } else {
+                        $developer = $developersSaved[$developer->getApiId()];
+                    }
+
                     $developer
                         ->addProject($project)
-                        ->setGroup($group)
-                    ;
+                        ->setGroup($group);
 
                     $container->get('app.developer.repository')->save($developer);
                 }
