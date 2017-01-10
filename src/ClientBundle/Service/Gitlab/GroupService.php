@@ -31,4 +31,15 @@ class GroupService extends AbstractGitlabService
 
         return $this->client->send($request);
     }
+
+    /**
+     * @params array $params
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getGroups()
+    {
+        $request = new Request('GET', $this->formatUri('groups'));
+
+        return $this->client->send($request);
+    }
 }
