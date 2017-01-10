@@ -28,14 +28,19 @@ abstract class AbstractConsumerWebService implements ConsumerWebServiceInterface
         $this->mapping = $mapping;
     }
 
-    public function handleResponse(Response $response)
+    /**
+     * @param Response $response
+     * @param bool $forceToArray
+     * @return array|null
+     */
+    public function handleResponse(Response $response, $forceToArray = false)
     {
         $result = \GuzzleHttp\json_decode($response->getBody()->getContents());
         if (0 === count($result)) {
             return null;
         }
 
-        if (1 === count($result)) {
+        if (1 === count($result) && !$forceToArray) {
             return $this->mapping->format((array) $result[0]);
         }
 
