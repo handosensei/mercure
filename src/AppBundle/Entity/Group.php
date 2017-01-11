@@ -28,15 +28,6 @@ class Group
      */
     protected $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Developer", mappedBy="group")
-     */
-    protected $developers;
-
-    public function __construct()
-    {
-        $this->developers = new ArrayCollection();
-    }
 
     /**
      * @return int
@@ -80,25 +71,6 @@ class Group
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getDevelopers()
-    {
-        return $this->developers;
-    }
-
-    /**
-     * @param ArrayCollection $developers
-     * @return Group
-     */
-    public function setDevelopers(ArrayCollection $developers)
-    {
-        $this->developers = $developers;
 
         return $this;
     }

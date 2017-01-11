@@ -44,8 +44,7 @@ class Developer
     protected $gravatarUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="developers", cascade={"persist"})
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="developers", cascade={"persist"})
      */
     protected $group;
 
