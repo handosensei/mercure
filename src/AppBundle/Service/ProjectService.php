@@ -3,17 +3,30 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Group;
+use AppBundle\Entity\Project;
+use AppBundle\Repository\GroupRepository;
+use AppBundle\Repository\ProjectRepository;
 use AppBundle\Service\Mapping\MappingInterface;
 use ClientBundle\Service\ClientServiceInterface;
 
 class ProjectService extends AbstractConsumerWebService
 {
     /**
-     * @inheritdoc
+     * @var GroupRepository
      */
-    public function __construct(ClientServiceInterface $clientService, MappingInterface $mapping)
+    protected $groupRepository;
+
+    /**
+     * @var ProjectRepository
+     */
+    protected $projectRepository;
+
+    public function __construct(ClientServiceInterface $clientService, MappingInterface $mapping,
+        ProjectRepository $projectRepository, GroupRepository $groupRepository)
     {
         parent::__construct($clientService, $mapping);
+        $this->groupRepository = $groupRepository;
+        $this->projectRepository = $projectRepository;
     }
 
     /**
@@ -35,5 +48,38 @@ class ProjectService extends AbstractConsumerWebService
         $response = $this->clientService->getProjectsByGroup($group->getApiId(), $perPage);
 
         return $this->handleResponse($response);
+    }
+
+    /**
+     * Consultation des nouveaux projets sur le client git et enregistrement en BDD des projets non existant
+     * @return array|null
+     */
+    public function saveNewProjects()
+    {
+        $projectsFromBdd = $this->projectRepository->findAll();
+        $listProjectApiIds = [];
+        foreach ($projectsFromBdd as $projectSaved) {
+            $listProjectApiIds[] = $projectSaved->getApiId();
+        }
+
+        $groups = $this->groupRepository->findAll();
+        foreach ($groups as $group) {
+            $projects = $this->getProjectsByGroup($group);
+            $projectsToSave = [];
+            /** @var Project $project */
+            foreach ($projects as $project) {
+                if (in_array($project->getApiId(), $listProjectApiIds)) {
+                    continue;
+                }
+                $project->setGroup($group);
+                $projectsToSave[] = $project;
+            }
+        }
+
+        if (empty($projectsToSave)) {
+            return null;
+        }
+
+        return $this->projectRepository->save($projectsToSave);
     }
 }

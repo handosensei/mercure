@@ -22,3 +22,5 @@ services:
         arguments:
             - '@app.gitlab.project.service'
             - '@app.project.mapping'
+            - '@app.project.repository'
+            - '@app.group.repository'
