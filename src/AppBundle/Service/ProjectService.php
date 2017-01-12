@@ -47,7 +47,7 @@ class ProjectService extends AbstractConsumerWebService
     {
         $response = $this->clientService->getProjectsByGroup($group->getApiId(), $perPage);
 
-        return $this->handleResponse($response);
+        return $this->handleResponse($response, true);
     }
 
     /**
@@ -63,9 +63,9 @@ class ProjectService extends AbstractConsumerWebService
         }
 
         $groups = $this->groupRepository->findAll();
+        $projectsToSave = [];
         foreach ($groups as $group) {
             $projects = $this->getProjectsByGroup($group);
-            $projectsToSave = [];
             /** @var Project $project */
             foreach ($projects as $project) {
                 if (in_array($project->getApiId(), $listProjectApiIds)) {

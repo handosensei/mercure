@@ -9,6 +9,8 @@ services:
         arguments:
             - '@app.gitlab.user.service'
             - '@app.developer.mapping'
+            - '@app.developer.repository'
+            - '@app.project.repository'
 
     app.group.service:
         class: %app.group.service.class%

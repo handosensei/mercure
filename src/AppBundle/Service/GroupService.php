@@ -38,7 +38,7 @@ class GroupService extends AbstractConsumerWebService
     {
         $response = $this->clientService->getGroups();
 
-        return $this->handleResponse($response);
+        return $this->handleResponse($response, true);
     }
 
     /**

@@ -46,7 +46,7 @@ class Developer
     /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="developers", cascade={"persist"})
      */
-    protected $group;
+    protected $groups;
 
     /**
      * @ORM\ManyToMany(targetEntity="Project", inversedBy="developers", cascade={"persist"})
@@ -63,6 +63,7 @@ class Developer
     public function __construct()
     {
         $this->projects = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -171,18 +172,29 @@ class Developer
     /**
      * @return Group
      */
-    public function getGroup()
+    public function getGroups()
     {
-        return $this->group;
+        return $this->groups;
     }
 
     /**
-     * @param Group $group
+     * @param array $groups
      * @return Developer
      */
-    public function setGroup(Group $group)
+    public function setGroups($groups)
     {
-        $this->group = $group;
+        if (!($groups instanceof ArrayCollection)) {
+            $groups = new ArrayCollection($groups);
+        }
+
+        $this->groups = $groups;
+
+        return $this;
+    }
+
+    public function addGroup(Group $group)
+    {
+        $this->groups->add($group);
 
         return $this;
     }
