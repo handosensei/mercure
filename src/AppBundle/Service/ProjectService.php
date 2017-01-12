@@ -43,9 +43,9 @@ class ProjectService extends AbstractConsumerWebService
      * @param Group $group
      * @return array|null
      */
-    public function getProjectsByGroup(Group $group, $perPage = 100)
+    public function getProjectsByGroup(Group $group, $page = 1, $perPage = 100)
     {
-        $response = $this->clientService->getProjectsByGroup($group->getApiId(), $perPage);
+        $response = $this->clientService->getProjectsByGroup($group->getApiId(), $page, $perPage);
 
         return $this->handleResponse($response, true);
     }
@@ -64,16 +64,21 @@ class ProjectService extends AbstractConsumerWebService
 
         $groups = $this->groupRepository->findAll();
         $projectsToSave = [];
+        $page = 1;
         foreach ($groups as $group) {
-            $projects = $this->getProjectsByGroup($group);
-            /** @var Project $project */
-            foreach ($projects as $project) {
-                if (in_array($project->getApiId(), $listProjectApiIds)) {
-                    continue;
+            $projects = $this->getProjectsByGroup($group, $page);
+            do {
+                $page++;
+                /** @var Project $project */
+                foreach ($projects as $project) {
+                    if (in_array($project->getApiId(), $listProjectApiIds)) {
+                        continue;
+                    }
+                    $project->setGroup($group);
+                    $projectsToSave[] = $project;
                 }
-                $project->setGroup($group);
-                $projectsToSave[] = $project;
-            }
+                $projects = $this->getProjectsByGroup($group, $page);
+            } while (count($projects));
         }
 
         if (empty($projectsToSave)) {

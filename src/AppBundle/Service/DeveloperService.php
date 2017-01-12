@@ -107,11 +107,8 @@ class DeveloperService extends AbstractConsumerWebService
                 if (array_key_exists($developer->getApiId(), $listDeveloperApiId)) {
                     continue;
                 }
-
-                $developer
-                    ->addProject($project)
-//                    ->setGroup($project->getGroup())
-                ;
+                $listDeveloperApiId[$developer->getApiId()] = $developer;
+                $developer->addProject($project);
                 $newDevelopers[] = $developer;
             }
         }
@@ -119,11 +116,6 @@ class DeveloperService extends AbstractConsumerWebService
         if (empty($newDevelopers)) {
             return null;
         }
-
-        foreach($newDevelopers as $developer) {
-//            dump($developer->getName(), $developer->getGroup()->getName());
-        }
-
 
         return $this->developerRepository->save($newDevelopers);
     }
