@@ -29,6 +29,7 @@ abstract class AbstractConsumerWebService implements ConsumerWebServiceInterface
     }
 
     /**
+     * TODO : [REFACTO] mettre $forceToArray à TRUE
      * @param Response $response
      * @param bool $forceToArray
      * @return array|null
