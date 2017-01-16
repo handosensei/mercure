@@ -48,6 +48,13 @@ class Project
     protected $mergeRequests;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -130,4 +137,44 @@ class Project
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMergeRequests()
+    {
+        return $this->mergeRequests;
+    }
+
+    /**
+     * @param ArrayCollection $mergeRequests
+     * @return Project
+     */
+    public function setMergeRequests($mergeRequests)
+    {
+        $this->mergeRequests = $mergeRequests;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return Project
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+
 }

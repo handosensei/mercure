@@ -18,6 +18,10 @@ class ProjectMapping implements MappingInterface
         $project->setApiId($accessor->getValue($data, '[id]'));
         $project->setName($accessor->getValue($data, '[name]'));
 
+        $date = $accessor->getValue($data, '[created_at]');
+        $createdAt = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($date)));
+        $project->setCreatedAt($createdAt);
+
         return $project;
     }
 }
