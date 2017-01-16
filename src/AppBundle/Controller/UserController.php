@@ -14,6 +14,6 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return new Response('ok');
+        return $this->render('user/index.html.twig');
     }
 }
