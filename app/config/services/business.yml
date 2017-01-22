@@ -1,6 +1,7 @@
 parameters:
     app.developer.service.class: AppBundle\Service\DeveloperService
     app.group.service.class: AppBundle\Service\GroupService
+    app.merge_request.service.class: AppBundle\Service\MergeRequestService
     app.project.service.class: AppBundle\Service\ProjectService
 
 services:
@@ -26,3 +27,10 @@ services:
             - '@app.project.mapping'
             - '@app.project.repository'
             - '@app.group.repository'
+
+    app.merge_request.service:
+        class: %app.merge_request.service.class%
+        arguments:
+            - '@app.gitlab.merge_request.service'
+            - '@app.merge_request.mapping'
+            - '@app.merge_request.repository'

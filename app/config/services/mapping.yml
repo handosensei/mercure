@@ -1,7 +1,8 @@
 parameters:
-    app.developer.mapping.class:  AppBundle\Service\Mapping\DeveloperMapping
-    app.group.mapping.class:      AppBundle\Service\Mapping\GroupMapping
-    app.project.mapping.class:    AppBundle\Service\Mapping\ProjectMapping
+    app.developer.mapping.class:      AppBundle\Service\Mapping\DeveloperMapping
+    app.group.mapping.class:          AppBundle\Service\Mapping\GroupMapping
+    app.merge_request.mapping.class:  AppBundle\Service\Mapping\MergeRequestMapping
+    app.project.mapping.class:        AppBundle\Service\Mapping\ProjectMapping
 
 services:
     app.developer.mapping:
@@ -9,6 +10,9 @@ services:
 
     app.group.mapping:
         class: %app.group.mapping.class%
+
+    app.merge_request.mapping:
+        class: %app.project.mapping.class%
 
     app.project.mapping:
         class: %app.project.mapping.class%

@@ -2,7 +2,7 @@
 
 namespace ClientBundle\Service\Gitlab;
 
-use ClientBundle\Client\MergeRequestFilter;
+use ClientBundle\Filter\Gitlab\MergeRequestFilter;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 

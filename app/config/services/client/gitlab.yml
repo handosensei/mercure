@@ -1,11 +1,18 @@
 parameters:
     app.gitlab.group.service.class:     ClientBundle\Service\Gitlab\GroupService
+    app.gitlab.merge_request.service.class:   ClientBundle\Service\Gitlab\MergeRequestService
     app.gitlab.project.service.class:   ClientBundle\Service\Gitlab\ProjectService
     app.gitlab.user.service.class:      ClientBundle\Service\Gitlab\UserService
 
 services:
     app.gitlab.group.service:
         class: %app.gitlab.group.service.class%
+        arguments:
+            - '@gitlab.client'
+            - %gitlab_token%
+
+    app.gitlab.merge_request.service:
+        class: %app.gitlab.merge_request.service.class%
         arguments:
             - '@gitlab.client'
             - %gitlab_token%

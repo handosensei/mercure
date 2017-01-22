@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Project;
 use AppBundle\Service\Mapping\MappingInterface;
-use ClientBundle\Client\MergeRequestFilter;
+use ClientBundle\Filter\Gitlab\MergeRequestFilter;
 use ClientBundle\Service\ClientServiceInterface;
 
 class MergeRequestService extends AbstractConsumerWebService

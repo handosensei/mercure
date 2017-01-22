@@ -1,8 +1,6 @@
 <?php
 
-namespace ClientBundle\Client;
-
-use ClientBundle\Filter\Gitlab\AbstractGitlabFilter;
+namespace ClientBundle\Filter\Gitlab;
 
 class MergeRequestFilter extends AbstractGitlabFilter
 {
