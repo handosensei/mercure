@@ -1,4 +1,9 @@
 mercure
 =======
 
-A Symfony project created on December 25, 2016, 9:46 am.
+TODO
+----
+* Mettre l'url du projet
+* Gérer les commits (à définir)
+* Slug le nom des projets
+* Initialiser le nombre de développeur sur un projet
