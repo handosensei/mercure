@@ -50,8 +50,10 @@ class GroupService extends AbstractConsumerWebService
     {
         $groupsFromBdd = $this->repository->findAll();
         $listGroupApiIds = [];
-        foreach ($groupsFromBdd as $groupSaved) {
-            $listGroupApiIds[] = $groupSaved->getApiId();
+        if (count($groupsFromBdd)) {
+            foreach ($groupsFromBdd as $groupSaved) {
+                $listGroupApiIds[] = $groupSaved->getApiId();
+            }
         }
 
         $groupsFromApi = $this->getGroups();

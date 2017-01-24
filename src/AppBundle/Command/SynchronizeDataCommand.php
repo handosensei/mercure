@@ -33,7 +33,7 @@ class SynchronizeDataCommand extends ContainerAwareCommand
         $newGroups = $container->get('app.group.service')->saveNewGroups();
         if (count($newGroups)) {
             foreach ($newGroups as $group) {
-                $io->comment(sprintf('nouveau groupe %s enregistré', $group->getName()));
+                $io->comment(sprintf('nouveau groupe \'%s\' enregistré', $group->getName()));
             }
         } else {
             $io->warning('Pas de nouveau groupe');
@@ -42,7 +42,7 @@ class SynchronizeDataCommand extends ContainerAwareCommand
         $newProjects = $container->get('app.project.service')->saveNewProjects();
         if (count($newProjects)) {
             foreach ($newProjects as $project) {
-                $io->comment(sprintf('nouveau project %s enregistré', $project->getName()));
+                $io->comment(sprintf('nouveau project \'%s\' enregistré', $project->getName()));
             }
         } else {
             $io->warning('Pas de nouveau projet');
@@ -51,7 +51,7 @@ class SynchronizeDataCommand extends ContainerAwareCommand
         $newDevelopers = $container->get('app.developer.service')->saveNewDevelopers();
         if (count($newDevelopers)) {
             foreach ($newDevelopers as $developer) {
-                $io->comment(sprintf('nouveau developpeur %s enregistré', $developer->getName()));
+                $io->comment(sprintf('nouveau developpeur \'%s\' enregistré', $developer->getName()));
             }
         } else {
             $io->warning('Pas de nouveau développeur');

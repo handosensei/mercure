@@ -58,8 +58,10 @@ class ProjectService extends AbstractConsumerWebService
     {
         $projectsFromBdd = $this->projectRepository->findAll();
         $listProjectApiIds = [];
-        foreach ($projectsFromBdd as $projectSaved) {
-            $listProjectApiIds[] = $projectSaved->getApiId();
+        if (count($projectsFromBdd)) {
+            foreach ($projectsFromBdd as $projectSaved) {
+                $listProjectApiIds[] = $projectSaved->getApiId();
+            }
         }
 
         $groups = $this->groupRepository->findAll();
@@ -67,6 +69,9 @@ class ProjectService extends AbstractConsumerWebService
         $page = 1;
         foreach ($groups as $group) {
             $projects = $this->getProjectsByGroup($group, $page);
+            if (empty($projects)) {
+                continue;
+            }
             do {
                 $page++;
                 /** @var Project $project */
