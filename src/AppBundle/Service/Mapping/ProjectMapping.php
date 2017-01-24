@@ -14,13 +14,15 @@ class ProjectMapping implements MappingInterface
     {
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        $project = new Project();
-        $project->setApiId($accessor->getValue($data, '[id]'));
-        $project->setName($accessor->getValue($data, '[name]'));
-
         $date = $accessor->getValue($data, '[created_at]');
         $createdAt = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($date)));
-        $project->setCreatedAt($createdAt);
+        $project = new Project();
+        $project
+            ->setApiId($accessor->getValue($data, '[id]'))
+            ->setName($accessor->getValue($data, '[name]'))
+            ->setCreatedAt($createdAt)
+            ->setWebUrl($accessor->getValue($data, '[web_url]'))
+        ;
 
         return $project;
     }

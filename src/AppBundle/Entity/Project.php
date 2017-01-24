@@ -35,6 +35,13 @@ class Project
     protected $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $webUrl;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Group", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -176,5 +183,22 @@ class Project
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getWebUrl()
+    {
+        return $this->webUrl;
+    }
 
+    /**
+     * @param string $webUrl
+     * @return Project
+     */
+    public function setWebUrl($webUrl)
+    {
+        $this->webUrl = $webUrl;
+
+        return $this;
+    }
 }
