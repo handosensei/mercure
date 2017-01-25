@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,6 +70,13 @@ class MergeRequest
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     protected $project;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Commit", mappedBy="mergeRequest")
+     */
+    protected $commits;
 
     /**
      * @var \DateTime
@@ -214,6 +222,34 @@ class MergeRequest
     public function setProject($project)
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCommits()
+    {
+        return $this->commits;
+    }
+
+    /**
+     * @param ArrayCollection $commits
+     * @return MergeRequest
+     */
+    public function setCommits($commits)
+    {
+        $this->commits = $commits;
+    }
+
+    /**
+     * @param Commit $commit
+     * @return MergeRequest
+     */
+    public function addCommit(Commit $commit)
+    {
+        $this->commits->add($commit);
 
         return $this;
     }
