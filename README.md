@@ -3,7 +3,7 @@ mercure
 
 TODO
 ----
-* Mettre l'url du projet
+* **DONE** Mettre l'url du projet
+* **DONE** Slug le nom des projets
 * Gérer les commits (à définir)
-* Slug le nom des projets
 * Initialiser le nombre de développeur sur un projet

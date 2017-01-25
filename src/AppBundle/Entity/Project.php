@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table()
@@ -30,9 +31,12 @@ class Project
     protected $name;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Gedmo\Slug(fields={"name"})
      */
-    protected $description;
+    protected $slug;
 
     /**
      * @var string
@@ -40,6 +44,11 @@ class Project
      * @ORM\Column(type="string")
      */
     protected $webUrl;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="Group", cascade={"persist"})
@@ -198,6 +207,25 @@ class Project
     public function setWebUrl($webUrl)
     {
         $this->webUrl = $webUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Project
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
         return $this;
     }
