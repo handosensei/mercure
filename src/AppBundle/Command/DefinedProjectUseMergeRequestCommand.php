@@ -29,7 +29,7 @@ class DefinedProjectUseMergeRequestCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input, $output);
         $io->title('Projet utilisant les merges requests');
 
-        $projects = $container->get('app.project.repository')->findAll();
+        $projects = $container->get('app.project.repository')->findNotUsingMergeRequestYet();
         if (!$projects) {
             $io->warning('aucun projet');
             return;
@@ -46,6 +46,7 @@ class DefinedProjectUseMergeRequestCommand extends ContainerAwareCommand
             }
             $project->setUseMergeRequest(true);
             $projectToSave[] = $project;
+            $io->comment('Projet ' . $project->getName());
         }
 
         $container->get('app.project.repository')->save($projectToSave);

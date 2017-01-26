@@ -13,6 +13,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Project
 {
     /**
+     * @var integer
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,6 +23,7 @@ class Project
 
     /**
      * @var integer
+     *
      * @ORM\Column(type="integer", unique=true)
      */
     protected $apiId;
@@ -46,11 +49,15 @@ class Project
     protected $webUrl;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
 
     /**
+     * @var Group
+     *
      * @ORM\ManyToOne(targetEntity="Group", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -71,11 +78,23 @@ class Project
     protected $mergeRequests;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $number;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
+
+    public function __construct()
+    {
+        $this->useMergeRequest = false;
+    }
 
     /**
      * @return integer
@@ -254,6 +273,24 @@ class Project
         $this->useMergeRequest = $useMergeRequest;
 
         return $this;
+    }
 
+    /**
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param int $number
+     * @return Project
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
     }
 }
