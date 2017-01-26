@@ -57,6 +57,13 @@ class Project
     protected $group;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $useMergeRequest;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="MergeRequest", mappedBy="project")
@@ -228,5 +235,25 @@ class Project
         $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUseMergeRequest()
+    {
+        return $this->useMergeRequest;
+    }
+
+    /**
+     * @param boolean $useMergeRequest
+     * @return Project
+     */
+    public function setUseMergeRequest($useMergeRequest)
+    {
+        $this->useMergeRequest = $useMergeRequest;
+
+        return $this;
+
     }
 }
