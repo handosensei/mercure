@@ -12,11 +12,9 @@ class GroupMapping implements MappingInterface
      */
     public function format(array $data)
     {
-        $accessor = PropertyAccess::createPropertyAccessor();
-
         $group = new Group();
-        $group->setApiId($accessor->getValue($data, '[id]'));
-        $group->setName($accessor->getValue($data, '[name]'));
+        $group->setApiId($this->accessor->getValue($data, '[id]'));
+        $group->setName($this->accessor->getValue($data, '[name]'));
 
         return $group;
     }

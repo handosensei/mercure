@@ -12,14 +12,12 @@ class DeveloperMapping implements MappingInterface
      */
     public function format(array $data)
     {
-        $accessor = PropertyAccess::createPropertyAccessor();
-
         $developer = new Developer();
-        $developer->setApiId($accessor->getValue($data, '[id]'));
-        $developer->setName($accessor->getValue($data, '[name]'));
-        $developer->setUsername($accessor->getValue($data, '[username]'));
-        $developer->setState($accessor->getValue($data, '[state]'));
-        $developer->setGravatarUrl($accessor->getValue($data, '[avatar_url]'));
+        $developer->setApiId($this->accessor->getValue($data, '[id]'));
+        $developer->setName($this->accessor->getValue($data, '[name]'));
+        $developer->setUsername($this->accessor->getValue($data, '[username]'));
+        $developer->setState($this->accessor->getValue($data, '[state]'));
+        $developer->setGravatarUrl($this->accessor->getValue($data, '[avatar_url]'));
 
         return $developer;
     }
