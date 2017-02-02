@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
 use AppBundle\Service\Mapping\MappingInterface;
 use ClientBundle\Filter\Gitlab\MergeRequestFilter;
@@ -47,5 +48,16 @@ class MergeRequestService extends AbstractConsumerWebService
         } while (count($mergeRequests) == $mergeRequestFilter->getPerPage() || null != $mergeRequests);
 
         return $result;
+    }
+
+    /**
+     * @param MergeRequest $mergeRequest
+     * @return array|null
+     */
+    public function getChange(MergeRequest $mergeRequest)
+    {
+        $response = $this->clientService->getChange($mergeRequest->getProject()->getApiId(), $mergeRequest->getApiIid());
+
+        return $this->handleResponse($response);
     }
 }

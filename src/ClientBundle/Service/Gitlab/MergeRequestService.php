@@ -29,4 +29,18 @@ class MergeRequestService extends AbstractGitlabService
 
         return $this->client->send($request);
     }
+
+    /**
+     * Get change into merge request
+     * @param integer $projectApiId
+     * @param integer $mergeRequestId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getChange($projectApiId, $mergeRequestId)
+    {
+        $url = sprintf('projects/%s/merge_requests/%s/changes', $projectApiId, $mergeRequestId);
+        $request = new Request('GET', $this->formatUri($url));
+
+        return $this->client->send($request);
+    }
 }
