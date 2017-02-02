@@ -3,9 +3,8 @@
 namespace AppBundle\Service\Mapping;
 
 use AppBundle\Entity\Developer;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class DeveloperMapping implements MappingInterface
+class DeveloperMapping extends AbstractMapping implements MappingInterface
 {
     /**
      * @inheritdoc

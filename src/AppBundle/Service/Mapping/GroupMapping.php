@@ -3,9 +3,8 @@
 namespace AppBundle\Service\Mapping;
 
 use AppBundle\Entity\Group;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class GroupMapping implements MappingInterface
+class GroupMapping extends AbstractMapping implements MappingInterface
 {
     /**
      * @inheritdoc
