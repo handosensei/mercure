@@ -4,7 +4,9 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
+use AppBundle\Service\Mapping\CommitMapping;
 use AppBundle\Service\Mapping\MappingInterface;
+use AppBundle\Service\Mapping\MergeRequestMapping;
 use ClientBundle\Filter\Gitlab\MergeRequestFilter;
 use ClientBundle\Service\ClientServiceInterface;
 
@@ -31,6 +33,8 @@ class MergeRequestService extends AbstractConsumerWebService
     }
 
     /**
+     * Récupération des merges requests d'une projets
+     *
      * @param Project $project
      * @param MergeRequestFilter $mergeRequestFilter
      * @return array|null
@@ -51,13 +55,29 @@ class MergeRequestService extends AbstractConsumerWebService
     }
 
     /**
+     * @param Project $project
      * @param MergeRequest $mergeRequest
      * @return array|null
      */
-    public function getChange(MergeRequest $mergeRequest)
+    public function getChange(Project $project, MergeRequest $mergeRequest)
     {
-        $response = $this->clientService->getChange($mergeRequest->getProject()->getApiId(), $mergeRequest->getApiIid());
+        $response = $this->clientService->getChange($project->getApiId(), $mergeRequest->getApiIid());
 
         return $this->handleResponse($response);
+    }
+
+    /**
+     * @param Project $project
+     * @param MergeRequest $mergeRequest
+     * @return MergeRequest
+     */
+    public function getOne(Project $project, MergeRequest $mergeRequest)
+    {
+        $response = $this->clientService->getOne($project->getApiId(), $mergeRequest->getApiId());
+        /** @var MergeRequest $mergeRequest */
+        $mergeRequest = $this->handleResponse($response);
+        $mergeRequest->setProject($project);
+
+        return $mergeRequest;
     }
 }

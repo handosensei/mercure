@@ -1,10 +1,14 @@
 parameters:
+    app.commit.mapping.class:         AppBundle\Service\Mapping\CommitMapping
     app.developer.mapping.class:      AppBundle\Service\Mapping\DeveloperMapping
     app.group.mapping.class:          AppBundle\Service\Mapping\GroupMapping
     app.merge_request.mapping.class:  AppBundle\Service\Mapping\MergeRequestMapping
     app.project.mapping.class:        AppBundle\Service\Mapping\ProjectMapping
 
 services:
+    app.commit.mapping:
+        class: %app.commit.mapping.class%
+
     app.developer.mapping:
         class: %app.developer.mapping.class%
 
@@ -12,7 +16,7 @@ services:
         class: %app.group.mapping.class%
 
     app.merge_request.mapping:
-        class: %app.project.mapping.class%
+        class: %app.merge_request.mapping.class%
 
     app.project.mapping:
         class: %app.project.mapping.class%

@@ -1,4 +1,5 @@
 parameters:
+    app.commit.service.class: AppBundle\Service\CommitService
     app.developer.service.class: AppBundle\Service\DeveloperService
     app.group.service.class: AppBundle\Service\GroupService
     app.merge_request.service.class: AppBundle\Service\MergeRequestService
@@ -34,3 +35,9 @@ services:
             - '@app.gitlab.merge_request.service'
             - '@app.merge_request.mapping'
             - '@app.merge_request.repository'
+
+    app.commit.service:
+        class: %app.commit.service.class%
+        arguments:
+            - '@app.gitlab.merge_request.service'
+            - '@app.commit.mapping'
