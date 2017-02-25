@@ -22,7 +22,7 @@ class ProjectRepository extends BaseRepository
     public function findNotUsingMergeRequestYet()
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.useMergeRequest is false')
+            ->andWhere('p.useMergeRequest = 0')
             ->getQuery()
             ->getResult()
         ;

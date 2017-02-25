@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
 use ClientBundle\Filter\Gitlab\MergeRequestFilter;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -11,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * WIP
+ * Commande à utiliser quotidiennement pour construire les données liés aux MR du groupe
  * Class StatMergeRequestCommand
  * @package AppBundle\Command
  */
@@ -20,9 +21,9 @@ class StatMergeRequestCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('app:mr:build-stat')
+            ->setName('app:merge-request:stat')
             ->setDescription('Stat des MR sur un ou l\'ensemble des projets')
-            ->addOption('state', 's', InputOption::VALUE_OPTIONAL, 'Etat des merges requests souhaités (all, merged, closed, opened)', 'merged')
+            ->addOption('state', 's', InputOption::VALUE_OPTIONAL, 'Etat des merges requests souhaités (all, merged, closed, opened)', 'all')
             ->addOption('project', 'p', InputOption::VALUE_OPTIONAL, 'Afficher le nombre de merge request pour un projet');
         ;
     }
@@ -32,9 +33,6 @@ class StatMergeRequestCommand extends ContainerAwareCommand
         $container = $this->getContainer();
         $io = new SymfonyStyle($input, $output);
         $io->title('Affichage des stats');
-
-        $mergeRequestFilter = new MergeRequestFilter();
-        $mergeRequestFilter->setState($input->getOption('state'));
 
         $projects = [];
         if ('' != $input->getOption('project')) {
@@ -49,15 +47,35 @@ class StatMergeRequestCommand extends ContainerAwareCommand
             $projects = $container->get('app.project.repository')->findAll();
         }
 
+        $mergeRequestFilter = new MergeRequestFilter();
+        $mergeRequestFilter
+            ->setState($input->getOption('state'))
+            ->setOrderBy('created_at')
+        ;
+
+        $mergeRequestsToSave = [];
+        /** @var Project $project */
         foreach ($projects as $project) {
             $mergeRequests = $container->get('app.merge_request.service')->getMergeRequestByProject($project, $mergeRequestFilter);
             if (0 == count($mergeRequests)) {
                 continue;
             }
-            $io->writeln(sprintf('%s merge request merged sur le projet %s', count($mergeRequests), $project->getName()));
+
+            /** @var MergeRequest $mergeRequest */
+            foreach ($mergeRequests as $mergeRequest) {
+                $project->setUseMergeRequest(true);
+                $mergeRequest->setProject($project);
+                // On ne gère que les MR de la journée
+//                if ($mergeRequest->getCreatedAt() != new \DateTime()) {
+//                    continue;
+//                }
+
+                $container->get('app.commit.service')->attachCommitsToMergeRequest($mergeRequest);
+                $mergeRequestsToSave[] = $mergeRequest;
+            }
         }
 
+        $container->get('app.merge_request.repository')->save($mergeRequestsToSave);
         $io->success('Terminé');
     }
 }
-
