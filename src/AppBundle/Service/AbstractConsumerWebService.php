@@ -42,6 +42,10 @@ abstract class AbstractConsumerWebService implements ConsumerWebServiceInterface
         }
 
         if (1 === count($result) && !$forceToArray) {
+            if ($result instanceof \stdClass) {
+                return $this->mapping->format((array) $result);
+            }
+
             return $this->mapping->format((array) $result[0]);
         }
 
