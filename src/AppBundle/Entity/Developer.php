@@ -170,7 +170,7 @@ class Developer
     }
 
     /**
-     * @return Group
+     * @return ArrayCollection
      */
     public function getGroups()
     {

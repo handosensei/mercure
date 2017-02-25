@@ -94,6 +94,7 @@ class Project
     public function __construct()
     {
         $this->useMergeRequest = false;
+        $this->mergeRequests = new ArrayCollection();
     }
 
     /**
@@ -195,6 +196,17 @@ class Project
     public function setMergeRequests($mergeRequests)
     {
         $this->mergeRequests = $mergeRequests;
+
+        return $this;
+    }
+
+    /**
+     * @param MergeRequest $mergeRequest
+     * @return Project
+     */
+    public function addMergeRequest(MergeRequest $mergeRequest)
+    {
+        $this->mergeRequests->add($mergeRequest);
 
         return $this;
     }

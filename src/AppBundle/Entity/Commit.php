@@ -48,6 +48,11 @@ class Commit
      */
     protected $createdAt;
 
+    public function __toString()
+    {
+        return $this->sha1;
+    }
+
     /**
      * @return int
      */

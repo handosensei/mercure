@@ -25,7 +25,7 @@ class MergeRequest
      *
      * @ORM\Column(type="integer", unique=true)
      */
-    protected $apiIid;
+    protected $apiId;
 
     /**
      * @var string
@@ -74,7 +74,7 @@ class MergeRequest
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Commit", mappedBy="mergeRequest")
+     * @ORM\OneToMany(targetEntity="Commit", mappedBy="mergeRequest", cascade={"persist"})
      */
     protected $commits;
 
@@ -84,6 +84,11 @@ class MergeRequest
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
+
+    public function __construct()
+    {
+        $this->commits = new ArrayCollection();
+    }
 
     /**
      * @return integer
@@ -96,18 +101,18 @@ class MergeRequest
     /**
      * @return integer
      */
-    public function getApiIid()
+    public function getApiId()
     {
-        return $this->apiIid;
+        return $this->apiId;
     }
 
     /**
-     * @param integer $apiIid
+     * @param integer $apiId
      * @return MergeRequest
      */
-    public function setApiIid($apiIid)
+    public function setApiId($apiId)
     {
-        $this->apiIid = $apiIid;
+        $this->apiId = $apiId;
 
         return $this;
     }
@@ -219,9 +224,10 @@ class MergeRequest
      * @param Project $project
      * @return MergeRequest
      */
-    public function setProject($project)
+    public function setProject(Project $project)
     {
         $this->project = $project;
+        $project->addMergeRequest($this);
 
         return $this;
     }
@@ -241,6 +247,8 @@ class MergeRequest
     public function setCommits($commits)
     {
         $this->commits = $commits;
+
+        return $this;
     }
 
     /**
@@ -249,6 +257,7 @@ class MergeRequest
      */
     public function addCommit(Commit $commit)
     {
+        $commit->setMergeRequest($this);
         $this->commits->add($commit);
 
         return $this;
