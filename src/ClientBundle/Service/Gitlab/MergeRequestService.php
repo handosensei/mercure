@@ -8,6 +8,10 @@ use GuzzleHttp\Psr7\Request;
 
 class MergeRequestService extends AbstractGitlabService
 {
+    const STATE_CLOSED = 'closed';
+    const STATE_OPENED = 'opened';
+    const STATE_MERGED = 'merged';
+
     /**
      * GitlabService constructor.
      * @param ClientInterface $client
@@ -18,7 +22,7 @@ class MergeRequestService extends AbstractGitlabService
     }
 
     /**
-     * @param integer $projectApiId
+     * @param int $projectApiId
      * @param MergeRequestFilter $filter
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -32,8 +36,8 @@ class MergeRequestService extends AbstractGitlabService
 
     /**
      * Get change into merge request
-     * @param integer $projectApiId
-     * @param integer $mergeRequestId
+     * @param int $projectApiId
+     * @param int $mergeRequestId
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getChange($projectApiId, $mergeRequestId)
@@ -45,8 +49,8 @@ class MergeRequestService extends AbstractGitlabService
     }
 
     /**
-     * @param integer $projectApiId
-     * @param integer $mergeRequestApiId
+     * @param int $projectApiId
+     * @param int $mergeRequestApiId
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getCommitsByMergeRequestId($projectApiId, $mergeRequestApiId)
@@ -58,8 +62,8 @@ class MergeRequestService extends AbstractGitlabService
     }
 
     /**
-     * @param integer $projectApiId
-     * @param integer $mergeRequestId
+     * @param int $projectApiId
+     * @param int $mergeRequestId
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getOne($projectApiId, $mergeRequestId)
@@ -68,6 +72,50 @@ class MergeRequestService extends AbstractGitlabService
         $request = new Request('GET', $this->formatUri($url));
 
         return $this->client->send($request);
+    }
+
+    /**
+     * @param int $projectApiId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getOpened($projectApiId)
+    {
+        return $this->getByStatus($projectApiId, self::STATE_OPENED);
+    }
+
+    /**
+     * @param int $projectApiId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getMerged($projectApiId)
+    {
+        return $this->getByStatus($projectApiId, self::STATE_MERGED);
+    }
+
+    /**
+     * @param int $projectApiId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getClosed($projectApiId)
+    {
+        return $this->getByStatus($projectApiId, self::STATE_CLOSED);
+    }
+
+    /**
+     * @param int $projectApiId
+     * @param string $status
+     * @return \Psr\Http\Message\ResponseInterface|bool
+     */
+    private function getByStatus($projectApiId, $status)
+    {
+        if (!in_array($status, [self::STATE_OPENED, self::STATE_MERGED, self::STATE_CLOSED])) {
+            return false;
+        }
+
+        $filter = new MergeRequestFilter();
+        $filter->setState($status);
+
+        return $this->getMergeRequestByProject($projectApiId, $filter);
     }
 
 }
