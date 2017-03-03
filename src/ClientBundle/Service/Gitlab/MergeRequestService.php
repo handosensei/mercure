@@ -73,49 +73,4 @@ class MergeRequestService extends AbstractGitlabService
 
         return $this->client->send($request);
     }
-
-    /**
-     * @param int $projectApiId
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function getOpened($projectApiId)
-    {
-        return $this->getByStatus($projectApiId, self::STATE_OPENED);
-    }
-
-    /**
-     * @param int $projectApiId
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function getMerged($projectApiId)
-    {
-        return $this->getByStatus($projectApiId, self::STATE_MERGED);
-    }
-
-    /**
-     * @param int $projectApiId
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function getClosed($projectApiId)
-    {
-        return $this->getByStatus($projectApiId, self::STATE_CLOSED);
-    }
-
-    /**
-     * @param int $projectApiId
-     * @param string $status
-     * @return \Psr\Http\Message\ResponseInterface|bool
-     */
-    private function getByStatus($projectApiId, $status)
-    {
-        if (!in_array($status, [self::STATE_OPENED, self::STATE_MERGED, self::STATE_CLOSED])) {
-            return false;
-        }
-
-        $filter = new MergeRequestFilter();
-        $filter->setState($status);
-
-        return $this->getMergeRequestByProject($projectApiId, $filter);
-    }
-
 }

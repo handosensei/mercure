@@ -4,11 +4,11 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
-use AppBundle\Service\Mapping\CommitMapping;
+use AppBundle\Repository\MergeRequestRepository;
 use AppBundle\Service\Mapping\MappingInterface;
-use AppBundle\Service\Mapping\MergeRequestMapping;
 use ClientBundle\Filter\Gitlab\MergeRequestFilter;
 use ClientBundle\Service\ClientServiceInterface;
+use ClientBundle\Service\Gitlab\MergeRequestService as ClientService;
 
 class MergeRequestService extends AbstractConsumerWebService
 {
@@ -23,13 +23,19 @@ class MergeRequestService extends AbstractConsumerWebService
     protected $mapping;
 
     /**
+     * @var MergeRequestRepository
+     */
+    protected $repository;
+
+    /**
      * MergeRequestService constructor.
      * @param ClientServiceInterface $clientService
      * @param MappingInterface $mapping
      */
-    public function __construct(ClientServiceInterface $clientService, MappingInterface $mapping)
+    public function __construct(ClientServiceInterface $clientService, MappingInterface $mapping, MergeRequestRepository $repository)
     {
         parent::__construct($clientService, $mapping);
+        $this->repository = $repository;
     }
 
     /**
@@ -79,5 +85,66 @@ class MergeRequestService extends AbstractConsumerWebService
         $mergeRequest->setProject($project);
 
         return $mergeRequest;
+    }
+
+    /**
+     * Récupération des merges requests ouverts
+     * @param Project $project
+     * @return array
+     */
+    public function getOpened(Project $project)
+    {
+        return $this->getByStatus($project, ClientService::STATE_OPENED);
+    }
+
+    /**
+     * Récupération des merges requests mergés
+     * @param Project $project
+     * @return array
+     */
+    public function getMerged(Project $project)
+    {
+        return $this->getByStatus($project, ClientService::STATE_MERGED);
+    }
+
+    /**
+     * Récupération des merges requests fermés
+     * @param Project $project
+     * @return array
+     */
+    public function getClosed(Project $project)
+    {
+        return $this->getByStatus($project, ClientService::STATE_CLOSED);
+    }
+
+    /**
+     * @param Project $project
+     * @return array
+     */
+    public function getUnclosed(Project $project)
+    {
+        return array_merge(
+            $this->getMerged($project),
+            $this->getOpened($project)
+        );
+    }
+
+    /**
+     * @param Project $project
+     * @param string $status
+     * @return array|bool|null
+     */
+    private function getByStatus(Project $project, $status)
+    {
+        if (!in_array($status, [ClientService::STATE_OPENED, ClientService::STATE_MERGED, ClientService::STATE_CLOSED])) {
+            return false;
+        }
+
+        $filter = new MergeRequestFilter();
+        $filter
+            ->setState($status)
+            ->setOrderBy('created_at');
+
+        return $this->getMergeRequestByProject($project, $filter);
     }
 }
