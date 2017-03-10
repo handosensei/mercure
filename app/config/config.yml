@@ -75,6 +75,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
+    from_email:
+        address:        noreply-mercure@carma.grdf.fr
+        sender_name:    Mercure App
 
 csa_guzzle:
     profiler: '%kernel.debug%'
