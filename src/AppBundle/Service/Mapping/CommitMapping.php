@@ -15,10 +15,14 @@ class CommitMapping extends AbstractMapping implements MappingInterface
         $date = $this->accessor->getValue($data, '[created_at]');
         $createdAt = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($date)));
         $commit
-            ->setCreatedAt($createdAt)
+            ->setId($this->accessor->getValue($data, '[id]'))
+            ->setShortId($this->accessor->getValue($data, '[short_id]'))
             ->setMessage($this->accessor->getValue($data, '[message]'))
-            ->setSha1($this->accessor->getValue($data, '[id]'))
+            ->setDeveloperName($this->accessor->getValue($data, '[author_name]'))
+            ->setDeveloperEmail($this->accessor->getValue($data, '[author_email]'))
+            ->setCreatedAt($createdAt)
         ;
+
         return $commit;
     }
 

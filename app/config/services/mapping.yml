@@ -17,6 +17,10 @@ services:
 
     app.merge_request.mapping:
         class: %app.merge_request.mapping.class%
+        arguments:
+            - '@app.developer.mapping'
+            - '@app.developer.repository'
+            - '@app.developer.service'
 
     app.project.mapping:
         class: %app.project.mapping.class%
