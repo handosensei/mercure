@@ -53,7 +53,7 @@ class MergeRequest
      *
      * @ORM\Column(type="smallint")
      */
-    protected $upvotes;
+    protected $upVotes;
 
     /**
      * @var Developer
@@ -177,18 +177,18 @@ class MergeRequest
     /**
      * @return int
      */
-    public function getUpvotes()
+    public function getUpVotes()
     {
-        return $this->upvotes;
+        return $this->upVotes;
     }
 
     /**
-     * @param int $upvotes
+     * @param int $upVotes
      * @return MergeRequest
      */
-    public function setUpvotes($upvotes)
+    public function setUpVotes($upVotes)
     {
-        $this->upvotes = $upvotes;
+        $this->upVotes = $upVotes;
 
         return $this;
     }
@@ -259,6 +259,16 @@ class MergeRequest
     {
         $commit->setMergeRequest($this);
         $this->commits->add($commit);
+
+        return $this;
+    }
+
+    /**
+     * @return MergeRequest
+     */
+    public function resetCommit()
+    {
+        $this->commits->clear();
 
         return $this;
     }

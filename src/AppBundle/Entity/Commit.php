@@ -11,11 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Commit
 {
     /**
-     * @var int
-     *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     protected $id;
 
@@ -24,7 +22,7 @@ class Commit
      *
      * @ORM\Column(type="string")
      */
-    protected $sha1;
+    protected $shortId;
 
     /**
      * @var string
@@ -32,6 +30,20 @@ class Commit
      * @ORM\Column(type="string")
      */
     protected $message;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $developerName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $developerEmail;
 
     /**
      * @var MergeRequest
@@ -48,13 +60,8 @@ class Commit
      */
     protected $createdAt;
 
-    public function __toString()
-    {
-        return $this->sha1;
-    }
-
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -62,20 +69,31 @@ class Commit
     }
 
     /**
-     * @return string
+     * @param string $id
+     * @return Commit
      */
-    public function getSha1()
+    public function setId($id)
     {
-        return $this->sha1;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
-     * @param string $sha1
+     * @return string
+     */
+    public function getShortId()
+    {
+        return $this->shortId;
+    }
+
+    /**
+     * @param string $shortId
      * @return Commit
      */
-    public function setSha1($sha1)
+    public function setShortId($shortId)
     {
-        $this->sha1 = $sha1;
+        $this->shortId = $shortId;
 
         return $this;
     }
@@ -133,6 +151,44 @@ class Commit
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeveloperName()
+    {
+        return $this->developerName;
+    }
+
+    /**
+     * @param string $developerName
+     * @return Commit
+     */
+    public function setDeveloperName($developerName)
+    {
+        $this->developerName = $developerName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeveloperEmail()
+    {
+        return $this->developerEmail;
+    }
+
+    /**
+     * @param string $developerEmail
+     * @return Commit
+     */
+    public function setDeveloperEmail($developerEmail)
+    {
+        $this->developerEmail = $developerEmail;
 
         return $this;
     }
