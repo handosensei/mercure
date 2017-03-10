@@ -2,10 +2,27 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 abstract class BaseRepository extends EntityRepository
 {
+    /**
+     * @param $data
+     * @return null
+     */
+    public function remove($data)
+    {
+        if (empty($data) ) {
+            return null;
+        }
+
+        foreach ($data as $object) {
+            $this->_em->remove($object);
+        }
+        $this->_em->flush();
+    }
+
     /**
      * @param mixed $data
      * @return null|mixed
@@ -46,6 +63,22 @@ abstract class BaseRepository extends EntityRepository
             $result[] = $object;
         }
         $this->_em->flush();
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     * @param string $field
+     * @return array
+     */
+    public function parseByKey($data, $field = 'id')
+    {
+        $method = sprintf('get%s', ucfirst($field));
+        $result = [];
+        foreach ($data as $object) {
+            $result[$object->$method()] = $object;
+        }
 
         return $result;
     }
