@@ -3,6 +3,7 @@ parameters:
     app.group.repository.class:         AppBundle\Repository\GroupRepository
     app.merge_request.repository.class: AppBundle\Repository\GroupRepository
     app.project.repository.class:       AppBundle\Repository\ProjectRepository
+    app.user.repository.class:          AppBundle\Repository\UserRepository
 
 services:
     app.developer.repository:
@@ -24,3 +25,8 @@ services:
         class: %app.project.repository.class%
         factory: ["@doctrine.orm.default_entity_manager", getRepository]
         arguments: ['AppBundle:Project']
+
+    app.user.repository:
+        class: %app.user.repository.class%
+        factory: ["@doctrine.orm.default_entity_manager", getRepository]
+        arguments: ['AppBundle:User']
