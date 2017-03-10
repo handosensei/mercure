@@ -5,17 +5,27 @@ namespace AppBundle\Service;
 use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
 use AppBundle\Repository\MergeRequestRepository;
+use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Mapping\MappingInterface;
 use ClientBundle\Filter\Gitlab\MergeRequestFilter;
 use ClientBundle\Service\ClientServiceInterface;
 use ClientBundle\Service\Gitlab\MergeRequestService as ClientService;
 
+/**
+ * Class MergeRequestService
+ * @package AppBundle\Service
+ */
 class MergeRequestService extends AbstractConsumerWebService
 {
     /**
      * @var ClientServiceInterface
      */
     protected $clientService;
+
+    /**
+     * @var CommitService
+     */
+    protected $commitService;
 
     /**
      * @var MappingInterface
@@ -25,17 +35,28 @@ class MergeRequestService extends AbstractConsumerWebService
     /**
      * @var MergeRequestRepository
      */
-    protected $repository;
+    protected $mergeRequestRepository;
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
 
     /**
      * MergeRequestService constructor.
      * @param ClientServiceInterface $clientService
+     * @param CommitService $commitService
      * @param MappingInterface $mapping
+     * @param MergeRequestRepository $mergeRequestRepository
+     * @param UserRepository $userRepository
      */
-    public function __construct(ClientServiceInterface $clientService, MappingInterface $mapping, MergeRequestRepository $repository)
+    public function __construct(ClientServiceInterface $clientService, CommitService $commitService, MappingInterface $mapping,
+                                MergeRequestRepository $mergeRequestRepository, UserRepository $userRepository)
     {
         parent::__construct($clientService, $mapping);
-        $this->repository = $repository;
+        $this->commitService = $commitService;
+        $this->mergeRequestRepository = $mergeRequestRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -119,18 +140,6 @@ class MergeRequestService extends AbstractConsumerWebService
 
     /**
      * @param Project $project
-     * @return array
-     */
-    public function getUnclosed(Project $project)
-    {
-        return array_merge(
-            $this->getMerged($project),
-            $this->getOpened($project)
-        );
-    }
-
-    /**
-     * @param Project $project
      * @param string $status
      * @return array|bool|null
      */
@@ -146,5 +155,45 @@ class MergeRequestService extends AbstractConsumerWebService
             ->setOrderBy('created_at');
 
         return $this->getMergeRequestByProject($project, $filter);
+    }
+
+    /**
+     * @param Project $project
+     * @param string $key
+     * @return array
+     */
+    public function getOpenedFromBdd(Project $project, $key = 'apiId')
+    {
+        $mergeRequests = $this->mergeRequestRepository->findOpened($project);
+
+        return $this->mergeRequestRepository->parseByKey($mergeRequests, $key);
+    }
+
+    /**
+     * @param Project $project
+     * @return array
+     */
+    public function update(Project $project)
+    {
+        $mergeRequestsFromBdd = $this->getOpenedFromBdd($project);
+        $mergeRequestsFromClient = $this->getOpened($project);
+        if (0 == count($mergeRequestsFromClient)) {
+            return [];
+        }
+
+        $mergeRequestToSave = [];
+        foreach ($mergeRequestsFromClient as $mergeRequest) {
+            /** @var MergeRequest $mergeRequest */
+            if (array_key_exists($mergeRequest->getApiId(), $mergeRequestsFromBdd)) {
+                $mergeRequest = $this->mapping->updateOne($mergeRequestsFromBdd[$mergeRequest->getApiId()], $mergeRequest);
+            } else {
+                $mergeRequest->setProject($project);
+            }
+
+            $this->mergeRequestRepository->remove($mergeRequest->getCommits());
+            $mergeRequestToSave[] = $this->commitService->attachCommitsToMergeRequest($mergeRequest);
+        }
+
+        return $this->mergeRequestRepository->save($mergeRequestToSave);
     }
 }

@@ -33,8 +33,10 @@ services:
         class: %app.merge_request.service.class%
         arguments:
             - '@app.gitlab.merge_request.service'
+            - '@app.commit.service'
             - '@app.merge_request.mapping'
             - '@app.merge_request.repository'
+            - '@app.user.repository'
 
     app.commit.service:
         class: %app.commit.service.class%

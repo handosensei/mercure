@@ -73,7 +73,7 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="MergeRequest", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="MergeRequest", mappedBy="project", cascade={"persist"})
      */
     protected $mergeRequests;
 

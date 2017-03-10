@@ -2,14 +2,12 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 abstract class BaseRepository extends EntityRepository
 {
     /**
-     * @param $data
-     * @return null
+     * @param mixed $data
      */
     public function remove($data)
     {
