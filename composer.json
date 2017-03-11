@@ -2,6 +2,7 @@
     "name": "rchea/mercure",
     "license": "proprietary",
     "type": "project",
+    "description": "Merge/Pull request gamification",
     "autoload": {
         "psr-4": {
             "": "src/"
