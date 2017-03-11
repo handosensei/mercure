@@ -28,7 +28,7 @@ class DefinedSizeTeamProjectCommand extends ContainerAwareCommand
         $projectToSave = [];
         if (!$projects) {
             $io->error('Aucun projet à renseigner');
-            exit;
+            return;
         }
 
         /** @var Project $project */

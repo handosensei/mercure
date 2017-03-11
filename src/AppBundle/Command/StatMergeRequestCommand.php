@@ -64,7 +64,7 @@ class StatMergeRequestCommand extends ContainerAwareCommand
             $project = $this->getContainer()->get('app.project.repository')->findOneByName($input->getOption('project'));
             if (!($project instanceof Project)) {
                 $io->error(sprintf('Projet \'%s\' inconnu, tentez une synchronisation et relancez la commande', $input->getOption('project')));
-                exit;
+                return;
             }
 
             $projects[] = $project;

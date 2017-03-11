@@ -8,9 +8,17 @@ global_exclude_dirs:
 
 exclude_patterns:
     - app/check.php
-    - app/SymfonyRequirements.php
+    - var/SymfonyRequirements.php
     - web/config.php
     - web/app_*.php
+
+pre_composer_script: |
+    #!/bin/bash
+    cp app/config/parameters.yml.dist app/config/parameters.yml
+
+post_composer_script: |
+    #!/bin/bash
+    ./bin/console app:build-documentation --no-interaction
 
 rules:
     composer.apc_class_loader_should_be_enabled:
@@ -22,17 +30,17 @@ rules:
     composer.security_issue_in_composer:
         enabled: true
     composer.unfixed_dependency_version:
-        enabled: true
+        enabled: false
     composer.warning:
-        enabled: true
+        enabled: false
     doctrine.database_query_contains_string_and_variable_concatenation:
         enabled: true
     doctrine.invalid_schema:
         enabled: true
     doctrine.use_flush_in_loop:
-        enabled: true
+        enabled: false
     git.user_specific_ignored_file:
-        enabled: true
+        enabled: false
     html.html_link_contains_javascript:
         enabled: true
     php.absolute_path_present:
@@ -175,7 +183,7 @@ rules:
     symfony.version.end_of_life:
         enabled: true
     symfony.version.latest_stable:
-        enabled: true
+        enabled: false
     symfony.version.out_of_maintenance:
         enabled: true
     symfony.web.contains_php_files:
@@ -187,7 +195,7 @@ rules:
     task_fixme_comment:
         enabled: true
     task_todo_comment:
-        enabled: true
+        enabled: false
     task_xxx_comment:
         enabled: true
     third_party.use_deprecated_class:
@@ -210,9 +218,9 @@ rules:
     web.default_favicon:
         enabled: true
     web.missing_favicon:
-        enabled: true
+        enabled: false
     web.missing_robots_txt:
-        enabled: true
+        enabled: false
     web.non_utf8_encoding:
         enabled: true
     xml.syntax_error:

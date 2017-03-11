@@ -30,7 +30,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "csa/guzzle-bundle": "dev-master",
+        "csa/guzzle-bundle": "v2.2.0",
         "doctrine/doctrine-fixtures-bundle": "2.3.0",
         "stof/doctrine-extensions-bundle": "v1.2.*"
     },

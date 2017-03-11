@@ -44,12 +44,8 @@ class Developer
     protected $gravatarUrl;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Group", inversedBy="developers", cascade={"persist"})
-     */
-    protected $groups;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Project", inversedBy="developers", cascade={"persist"})
+     * @ORM\JoinTable(name="developer_project")
      */
     protected $projects;
 
@@ -63,7 +59,6 @@ class Developer
     public function __construct()
     {
         $this->projects = new ArrayCollection();
-        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -165,36 +160,6 @@ class Developer
     public function setGravatarUrl($gravatarUrl)
     {
         $this->gravatarUrl = $gravatarUrl;
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
-    /**
-     * @param array $groups
-     * @return Developer
-     */
-    public function setGroups($groups)
-    {
-        if (!($groups instanceof ArrayCollection)) {
-            $groups = new ArrayCollection($groups);
-        }
-
-        $this->groups = $groups;
-
-        return $this;
-    }
-
-    public function addGroup(Group $group)
-    {
-        $this->groups->add($group);
 
         return $this;
     }

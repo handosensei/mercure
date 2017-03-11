@@ -72,11 +72,11 @@ class MergeRequestService extends AbstractConsumerWebService
         do {
             $response = $this->clientService->getMergeRequestByProject($project->getApiId(), $mergeRequestFilter);
             $mergeRequests = $this->handleResponse($response, true);
-            if (null != $mergeRequests) {
+            if (null !== $mergeRequests) {
                 $result = array_merge($mergeRequests, $result);
                 $mergeRequestFilter->increasePage();
             }
-        } while (count($mergeRequests) == $mergeRequestFilter->getPerPage() || null != $mergeRequests);
+        } while (count($mergeRequests) == $mergeRequestFilter->getPerPage() || null !== $mergeRequests);
 
         return $result;
     }

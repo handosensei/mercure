@@ -29,6 +29,7 @@ framework:
         handler_id:  session.handler.native_file
 #        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
         save_path:   "/var/lib/php5/sessions"
+        name:   "%session_name%"
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -44,6 +45,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
+        server_version: 5.5.53
         driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"

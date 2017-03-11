@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "394f36567d2e6d3dc0e62c450b3e8345",
+    "content-hash": "529c157bae795e9e88346f486beab71a",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -48,16 +48,16 @@
         },
         {
             "name": "csa/guzzle-bundle",
-            "version": "dev-master",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/csarrazi/CsaGuzzleBundle.git",
-                "reference": "f14b7e4b9d04aa7509295554307c309766a451ba"
+                "reference": "001cc25706450286d90480444ab05ed31b7e8645"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/csarrazi/CsaGuzzleBundle/zipball/f14b7e4b9d04aa7509295554307c309766a451ba",
-                "reference": "f14b7e4b9d04aa7509295554307c309766a451ba",
+                "url": "https://api.github.com/repos/csarrazi/CsaGuzzleBundle/zipball/001cc25706450286d90480444ab05ed31b7e8645",
+                "reference": "001cc25706450286d90480444ab05ed31b7e8645",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "2.2.x-dev"
                 }
             },
             "autoload": {
@@ -103,7 +103,7 @@
                 }
             ],
             "description": "A bundle integrating GuzzleHttp >= 4.0",
-            "time": "2017-03-10 20:35:33"
+            "time": "2016-10-28T06:34:28+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -3961,8 +3961,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20,
-        "csa/guzzle-bundle": 20
+        "friendsofsymfony/user-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

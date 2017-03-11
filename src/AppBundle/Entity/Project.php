@@ -78,6 +78,11 @@ class Project
     protected $mergeRequests;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Developer", mappedBy="projects", cascade={"persist"})
+     */
+    protected $developers;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="smallint", nullable=true)

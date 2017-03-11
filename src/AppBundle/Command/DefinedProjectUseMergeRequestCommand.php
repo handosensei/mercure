@@ -41,7 +41,7 @@ class DefinedProjectUseMergeRequestCommand extends ContainerAwareCommand
         /** @var Project $project */
         foreach ($projects as $project) {
             $mergeRequests = $container->get('app.merge_request.service')->getMergeRequestByProject($project, $filter);
-            if (false == (bool) $mergeRequests) {
+            if (false === (bool) $mergeRequests) {
                 continue;
             }
             $project->setUseMergeRequest(true);
