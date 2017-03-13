@@ -1,3 +1,5 @@
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/b9bd0be8-979d-4438-ac9c-f8ea5e562313/mini.png)](https://insight.sensiolabs.com/projects/b9bd0be8-979d-4438-ac9c-f8ea5e562313)
+
 MERCURE
 =======
 
