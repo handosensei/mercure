@@ -16,4 +16,5 @@ TODO
 - Un développeur fait un commentaire 
 
 ## Pas de point
-- Pas de point si merge cloturé
+- Merge cloturé
+- Merge contenant plus de 100 modifications
