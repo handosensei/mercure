@@ -58,7 +58,7 @@ class MergeRequest
     /**
      * @var Developer
      *
-     * @ORM\ManyToOne(targetEntity="Developer", inversedBy="mergeRequests", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Developer", inversedBy="mergeRequests", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="developer_id", referencedColumnName="id")
      */
     protected $developer;
@@ -66,7 +66,7 @@ class MergeRequest
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="mergeRequests", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="mergeRequests", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     protected $project;
@@ -77,6 +77,13 @@ class MergeRequest
      * @ORM\OneToMany(targetEntity="Commit", mappedBy="mergeRequest", cascade={"persist"})
      */
     protected $commits;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Point", mappedBy="mergeRequest")
+     */
+    protected $points;
 
     /**
      * @var \DateTime
@@ -269,6 +276,36 @@ class MergeRequest
     public function resetCommit()
     {
         $this->commits->clear();
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param ArrayCollection $points
+     * @return MergeRequest
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * @param Point $point
+     * @return MergeRequest
+     */
+    public function addPoint(Point $point)
+    {
+        $this->points->add($point);
 
         return $this;
     }

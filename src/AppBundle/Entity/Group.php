@@ -27,6 +27,12 @@ class Group
      */
     protected $name;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Point", mappedBy="group")
+     */
+    protected $points;
 
     /**
      * @return int
@@ -70,6 +76,36 @@ class Group
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param ArrayCollection $points
+     * @return MergeRequest
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * @param Point $point
+     * @return MergeRequest
+     */
+    public function addPoint(Point $point)
+    {
+        $this->points->add($point);
 
         return $this;
     }

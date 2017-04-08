@@ -56,6 +56,13 @@ class Developer
      */
     protected $mergeRequests;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Point", mappedBy="developer")
+     */
+    protected $points;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -190,6 +197,36 @@ class Developer
     public function addProject(Project $project)
     {
         $this->projects->add($project);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param ArrayCollection $points
+     * @return MergeRequest
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * @param Point $point
+     * @return MergeRequest
+     */
+    public function addPoint(Point $point)
+    {
+        $this->points->add($point);
 
         return $this;
     }
