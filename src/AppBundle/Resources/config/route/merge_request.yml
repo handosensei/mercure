@@ -1,0 +1,9 @@
+merge_request_show:
+    path:      /{apiId}
+    defaults:  { _controller: AppBundle:MergeRequest:show }
+    methods:  [GET]
+
+merge_request_test:
+    path:      /{apiId}/test
+    defaults:  { _controller: AppBundle:MergeRequest:test }
+    methods:  [GET]

@@ -1,3 +1,7 @@
 user:
     prefix:   /users
     resource: "@AppBundle/Resources/config/route/user.yml"
+
+merge_request:
+    prefix:   /merge-requests
+    resource: "@AppBundle/Resources/config/route/merge_request.yml"
