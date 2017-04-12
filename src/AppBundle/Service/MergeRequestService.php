@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
+use AppBundle\Enum\MergeRequestStatusEnum;
 use AppBundle\Repository\MergeRequestRepository;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Mapping\MappingInterface;
@@ -115,7 +116,7 @@ class MergeRequestService extends AbstractConsumerWebService
      */
     public function getOpened(Project $project)
     {
-        return $this->getByStatus($project, ClientService::STATE_OPENED);
+        return $this->getByStatus($project, MergeRequestStatusEnum::STATUS_OPENED);
     }
 
     /**
@@ -125,7 +126,7 @@ class MergeRequestService extends AbstractConsumerWebService
      */
     public function getMerged(Project $project)
     {
-        return $this->getByStatus($project, ClientService::STATE_MERGED);
+        return $this->getByStatus($project, MergeRequestStatusEnum::STATUS_MERGED);
     }
 
     /**
@@ -135,7 +136,7 @@ class MergeRequestService extends AbstractConsumerWebService
      */
     public function getClosed(Project $project)
     {
-        return $this->getByStatus($project, ClientService::STATE_CLOSED);
+        return $this->getByStatus($project, MergeRequestStatusEnum::STATUS_CLOSED);
     }
 
     /**
@@ -145,7 +146,7 @@ class MergeRequestService extends AbstractConsumerWebService
      */
     private function getByStatus(Project $project, $status)
     {
-        if (!in_array($status, [ClientService::STATE_OPENED, ClientService::STATE_MERGED, ClientService::STATE_CLOSED])) {
+        if (!in_array($status, [MergeRequestStatusEnum::STATUS_OPENED, MergeRequestStatusEnum::STATUS_MERGED, MergeRequestStatusEnum::STATUS_CLOSED])) {
             return false;
         }
 

@@ -8,10 +8,6 @@ use GuzzleHttp\Psr7\Request;
 
 class MergeRequestService extends AbstractGitlabService
 {
-    const STATE_CLOSED = 'closed';
-    const STATE_OPENED = 'opened';
-    const STATE_MERGED = 'merged';
-
     /**
      * GitlabService constructor.
      * @param ClientInterface $client
