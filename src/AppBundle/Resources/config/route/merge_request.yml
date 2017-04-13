@@ -1,3 +1,8 @@
+merge_request_dashboard:
+    path:      /dashboard/{status}
+    defaults:  { _controller: AppBundle:MergeRequest:dashboard, status: 'merged' }
+    methods:  [GET]
+
 merge_request_show:
     path:      /{apiId}
     defaults:  { _controller: AppBundle:MergeRequest:show }
@@ -7,3 +12,4 @@ merge_request_test:
     path:      /{apiId}/test
     defaults:  { _controller: AppBundle:MergeRequest:test }
     methods:  [GET]
+

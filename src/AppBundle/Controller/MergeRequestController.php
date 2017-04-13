@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Helper\DateHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,16 +33,17 @@ class MergeRequestController extends Controller
     }
 
     /**
-     * @param string $apiId
+     * Affichage des stats mensuels sur les 12 derniers mois
      * @param Request $request
      * @return Response
      */
-    public function testAction($apiId, Request $request)
+    public function dashboardAction(Request $request, $status)
     {
-        $mergeRequest = $this->get('app.merge_request.repository')->findOneByApiId($apiId);
+        $stats = [];
+        foreach (DateHelper::getLimitEachMonth(12) as $date) {
+            $stats[$date->format('Y-m')] = $this->get('app.merge_request.service')->buildReportByMonth($date, $status);
+        }
 
-        $result = $this->get('app.merge_request.service')->totalChanges($mergeRequest);
-dump($result);exit;
-        return $this->render('merge_request/index.html.twig', ['mergeRequest' => $mergeRequest]);
+        return $this->render('merge_request/dashboard.html.twig', ['stats' => $stats]);
     }
 }

@@ -29,8 +29,8 @@ class MergeRequestRepository extends BaseRepository
         $query = $this->createQueryBuilder('m')
             ->select('p.slug as project', 'count(m.id) as nb', 'count(m.id)/p.number as moy')
             ->leftJoin('m.project', 'p')
-            ->andWhere('m.createdAt >= :start')->setParameter('start', $start)
-            ->andWhere('m.createdAt <= :end')->setParameter('end', $end)
+            ->andWhere('m.updatedAt >= :start')->setParameter('start', $start)
+            ->andWhere('m.updatedAt <= :end')->setParameter('end', $end)
             ->groupBy('p.slug')
         ;
 

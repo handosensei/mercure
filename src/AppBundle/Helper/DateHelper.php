@@ -34,7 +34,7 @@ class DateHelper
     public static function getLastDatetimeAtMonth(\DateTime $date)
     {
         $lastDay = clone $date;
-        $day = cal_days_in_month(CAL_GREGORIAN, $lastDay->format('m'), $lastDay->format('Y'));
+        $day = self::getLimitAtMonth($lastDay);
         $lastDay->modify(sprintf('+%s day', $day - 1));
 
         return $lastDay;
