@@ -74,7 +74,7 @@ class MergeRequest
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Commit", mappedBy="mergeRequest", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Commit", mappedBy="mergeRequest", cascade={"persist"}, fetch="EAGER")
      */
     protected $commits;
 
@@ -86,11 +86,23 @@ class MergeRequest
     protected $points;
 
     /**
+     * @var ArrayCollection
+     */
+    protected $changes;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
     public function __construct()
     {
@@ -325,6 +337,44 @@ class MergeRequest
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return MergeRequest
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChanges()
+    {
+        return $this->changes;
+    }
+
+    /**
+     * @param ArrayCollection $changes
+     * @return MergeRequest
+     */
+    public function setChanges($changes)
+    {
+        $this->changes = $changes;
 
         return $this;
     }

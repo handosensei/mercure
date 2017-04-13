@@ -41,13 +41,19 @@ class MergeRequestMapping extends AbstractMapping implements MappingInterface
         $mergeRequest = new MergeRequest();
         $date = $this->accessor->getValue($data, '[created_at]');
         $createdAt = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($date)));
+
+        $date = $this->accessor->getValue($data, '[updated_at]');
+        $updatedAt = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($date)));
+
         $mergeRequest
             ->setApiId($this->accessor->getValue($data, '[id]'))
             ->setCreatedAt($createdAt)
+            ->setUpdatedAt($updatedAt)
             ->setDescription($this->accessor->getValue($data, '[description]'))
             ->setStatus($this->accessor->getValue($data, '[state]'))
             ->setTitle($this->accessor->getValue($data, '[title]'))
             ->setUpvotes($this->accessor->getValue($data, '[upvotes]'))
+            ->setChanges($this->accessor->getValue($data, '[changes]'))
         ;
 
         $this->attachDeveloper($mergeRequest, $data);
