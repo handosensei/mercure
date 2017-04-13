@@ -5,6 +5,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\MergeRequest;
 use AppBundle\Entity\Project;
 use AppBundle\Enum\MergeRequestStatusEnum;
+use AppBundle\Helper\DateHelper;
 use AppBundle\Repository\MergeRequestRepository;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Mapping\MappingInterface;
@@ -196,5 +197,16 @@ class MergeRequestService extends AbstractConsumerWebService
         }
 
         return $this->mergeRequestRepository->save($mergeRequestToSave);
+    }
+
+    /**
+     * @param \DateTime $date
+     * @return array
+     */
+    public function buildReportByMonth(\DateTime $date, $status)
+    {
+        $lastDay = DateHelper::getLastDatetimeAtMonth($date);
+
+        return $this->mergeRequestRepository->findByPeriod($date, $lastDay, $status);
     }
 }

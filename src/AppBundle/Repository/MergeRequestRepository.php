@@ -17,4 +17,27 @@ class MergeRequestRepository extends BaseRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @param string $start
+     * @param string $end
+     * @param string $status
+     * @return array
+     */
+    public function findByPeriod($start, $end, $status = null)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->select('p.slug as project', 'count(m.id) as nb', 'count(m.id)/p.number as moy')
+            ->leftJoin('m.project', 'p')
+            ->andWhere('m.createdAt >= :start')->setParameter('start', $start)
+            ->andWhere('m.createdAt <= :end')->setParameter('end', $end)
+            ->groupBy('p.slug')
+        ;
+
+        if (null != $status) {
+            $query->andWhere('m.status = :status')->setParameter('status', $status);
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }
