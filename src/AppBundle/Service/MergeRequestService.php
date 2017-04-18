@@ -209,4 +209,56 @@ class MergeRequestService extends AbstractConsumerWebService
 
         return $this->mergeRequestRepository->findByPeriod($date, $lastDay, $status);
     }
+
+    /**
+     * @param string $status
+     * @param int $depth
+     * @return array
+     */
+    public function buildReportMonthly($status, $depth = 12)
+    {
+        $stats = [];
+        foreach (DateHelper::getLimitEachMonth($depth) as $date) {
+            $monthlyStat = $this->buildReportByMonth($date, $status);
+            $stats[$date->format('Y-m')] = $monthlyStat;
+        }
+
+        return $stats;
+    }
+
+    /**
+     * @param array $stats
+     * @param string $status
+     * @param string $rankBy
+     * @return array
+     */
+    public function buildRankReport(array $stats = [], $status = 'merged', $rankBy = 'moy')
+    {
+        if (empty($stats)) {
+            $stats = $this->buildReportMonthly($status);
+        }
+
+        $result = [];
+        foreach ($stats as $month => $monthResume) {
+            $result[$month] = $this->sortDescByMonth($monthResume, $rankBy);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $monthResume
+     * @param string $field moy ou nb
+     * @return array;
+     */
+    public function sortDescByMonth($monthResume, $field = 'moy')
+    {
+        $result = [];
+        foreach ($monthResume as $value) {
+            $result[$value['project']] = $value[$field];
+        }
+
+        ksort($result);
+        return $result;
+    }
 }

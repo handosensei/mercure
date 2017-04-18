@@ -10,7 +10,7 @@ TODO
 
 ## Attribution de point
 - [WIP] Merge request d'au moins 5 modifications
-- Classement mensuel top 3 par la moyenne / dev
+- [WIP] Classement mensuel top 3 par la moyenne / dev
 - Sauvegarde des données statistique des mois passés
 - Merge request mergé en moins de 24h jours ouvrés
 - Le nombre de vote up est égale au nombre de développeur sur l'équipe moins l'auteur de la merge request
