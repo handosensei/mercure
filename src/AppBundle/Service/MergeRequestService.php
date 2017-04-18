@@ -249,16 +249,20 @@ class MergeRequestService extends AbstractConsumerWebService
     /**
      * @param array $monthResume
      * @param string $field moy ou nb
-     * @return array;
+     * @return array
      */
-    public function sortDescByMonth($monthResume, $field = 'moy')
+    public function sortDescByMonth($monthResume, $field = 'moy', $depth = 3)
     {
+        if (empty($monthResume)) {
+            return null;
+        }
+
         $result = [];
         foreach ($monthResume as $value) {
             $result[$value['project']] = $value[$field];
         }
+        arsort($result);
 
-        ksort($result);
-        return $result;
+        return array_slice($result, 0, $depth);
     }
 }
