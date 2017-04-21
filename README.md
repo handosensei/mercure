@@ -10,7 +10,8 @@ TODO
 
 ## Attribution de point
 - [WIP] Merge request d'au moins 5 modifications
-- [WIP] Classement mensuel top 3 par la moyenne / dev
+- Faire une API 
+- Faire un swagger de API
 - Sauvegarde des données statistique des mois passés
 - Merge request mergé en moins de 24h jours ouvrés
 - Le nombre de vote up est égale au nombre de développeur sur l'équipe moins l'auteur de la merge request
@@ -23,3 +24,5 @@ TODO
 
 ## Done
 - Compter le nombre de merge request
+- Classement mensuel top 3 par la moyenne / dev
+- Refacto du paramétrage de Guzzle

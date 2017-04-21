@@ -5,5 +5,5 @@ services:
     gitlab.client:
         class: %gitlab.client.class%
         arguments:
-            - %gitlab_base_uri%
-            - %gitlab_timeout%
+            - "@csa_guzzle.client.gitlab_api"
+            - %gitlab_token%

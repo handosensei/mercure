@@ -1,30 +1,30 @@
 parameters:
+    app.gitlab.abstract.service.class:          ClientBundle\Service\Gitlab\AbstractGitlabService
     app.gitlab.group.service.class:     ClientBundle\Service\Gitlab\GroupService
     app.gitlab.merge_request.service.class:   ClientBundle\Service\Gitlab\MergeRequestService
     app.gitlab.project.service.class:   ClientBundle\Service\Gitlab\ProjectService
     app.gitlab.user.service.class:      ClientBundle\Service\Gitlab\UserService
 
 services:
-    app.gitlab.group.service:
-        class: %app.gitlab.group.service.class%
+    app.gitlab.abstract.service:
+        class: %app.gitlab.abstract.service.class%
+        abstract:  true
         arguments:
             - '@gitlab.client'
             - %gitlab_token%
+
+    app.gitlab.group.service:
+        class: %app.gitlab.group.service.class%
+        parent: app.gitlab.abstract.service
 
     app.gitlab.merge_request.service:
         class: %app.gitlab.merge_request.service.class%
-        arguments:
-            - '@gitlab.client'
-            - %gitlab_token%
+        parent: app.gitlab.abstract.service
 
     app.gitlab.project.service:
         class: %app.gitlab.project.service.class%
-        arguments:
-            - '@gitlab.client'
-            - %gitlab_token%
+        parent: app.gitlab.abstract.service
 
     app.gitlab.user.service:
         class: %app.gitlab.user.service.class%
-        arguments:
-            - '@gitlab.client'
-            - %gitlab_token%
+        parent: app.gitlab.abstract.service

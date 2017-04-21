@@ -81,10 +81,22 @@ fos_user:
         address:        noreply-mercure@carma.grdf.fr
         sender_name:    Mercure App
 
-csa_guzzle:
-    profiler: '%kernel.debug%'
-
 stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+
+csa_guzzle:
+    profiler: '%kernel.debug%'
+    logger: true
+    clients:
+        gitlab_api:
+            config:
+                base_uri: "%gitlab_base_uri%"
+                timeout:  10
+                http_errors: false
+                verify: false
+                headers:
+                    Accept: "application/json"
+                    Content-Type: "application/json"
+                    User-Agent: 'Mercure app'

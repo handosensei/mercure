@@ -6,16 +6,39 @@ use GuzzleHttp\Client;
 
 class GitlabClient extends Client
 {
-    protected $baseUri;
+    /**
+     * @var Client
+     */
+    protected $client;
 
-    protected $timeout;
+    /**
+     * @var string
+     */
+    protected $token;
 
-    public function __construct($baseUri, $timeout)
+    /**
+     * GitlabClient constructor.
+     * @param Client $client
+     */
+    public function __construct(Client $client, $token)
     {
-        parent::__construct([
-            'base_uri' => $baseUri,
-            'timeout' => $timeout,
-            'verify' => false,
-        ]);
+        parent::__construct($client->getConfig());
+        $this->token = $token;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 }
